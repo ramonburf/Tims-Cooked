@@ -8,6 +8,12 @@ No kernel read/write primitive, kernel code execution, PAC/SPTM bypass, or worki
 
 Start with the relevant notes under [`analysis/`](analysis/) and distinguish confirmed observations from hypotheses before running a probe.
 
+## Latest research update — 2026-11-20
+
+Static analysis has connected a Mach-VM-read-like request path to a VM copy/fault candidate on iOS 27.0.1 (build 24A446), but the exact API identity, ordinary-app reachability, and runtime guard conditions remain unverified. No confirmed vulnerability, controlled kernel corruption, kernel read/write primitive, or semi-untethered jailbreak has been demonstrated; no new CoW device trigger was run for this checkpoint.
+
+See the [dated research note](research-updates/2026-11-20.md) and the [GitHub checkpoint release](https://github.com/ramonburf/Tims-Cooked/releases/tag/research-2026-11-20). That release includes the unchanged, sanitized v0.6 IPA (SHA-256 `dd7a4680155fd738d5b279bf0da3e8debf385a0cf44d8636a0c35a3e1039ce50`); no new app build is claimed.
+
 ## Safety
 
 - Test only on devices you own or are authorized to assess.
