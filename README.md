@@ -8,7 +8,11 @@ No kernel read/write primitive, kernel code execution, PAC/SPTM bypass, or worki
 
 Start with the relevant notes under [`analysis/`](analysis/) and distinguish confirmed observations from hypotheses before running a probe.
 
-## Latest research update — 2026-11-20
+## Latest research update — 2026-11-21
+
+A later static pass audited six more equal-count kernel extensions and closed them as bounded negatives, recording one clean fix-shaped change with unresolved ownership. In the display-co-processor extension a virtual-method trampoline gained an input-size clamp that rejects calls whose size argument exceeds a small constant, where the target build dispatched unconditionally; the routine sits in a real method table, but the extension publishes no IOKit personalities, its own class-name strings name a different method table, and the owner class was not identified, so this is reconnaissance rather than a vulnerability. The other real edits are a bounds/overflow rework in four AppleInputDeviceSupport routines, a new helper call plus conditional rejection in AppleAVD's decode-command builder, two rewritten range-check wrappers and a new trap in DiskImages' UDIF decoder, and register-allocation noise in IOBiometricFamily; none has an established ordinary-app ingress. No out-of-bounds access, type confusion, lifetime error, kernel read/write primitive or jailbreak is established, and no device probe was run; see the [member sweep note](research-updates/2026-11-21-member-sweep.md).
+
+## Research updates — 2026-11-20
 
 Static work on iOS 27.0.1 (build 24A446) has completed an enumeration of kernel writers of the virtual-memory object “pager ready” flag bit. Two candidate producers are identified and characterised: the pager-association routine behind the freezer/pageout chain, which sets the bit only when the object’s internal flag is set, and a memory-object attribute handler reached from the system pager initialisers. Four previously unclassified candidate stores were shown to belong to VFS, network-interface, packet-buffer and Skywalk networking state rather than virtual-memory objects, so they do not affect the guarded fault predicate. Earlier the same day, static analysis connected a Mach-VM-read-like request path to a VM copy/fault candidate. Neither result is a confirmed vulnerability, controlled corruption, kernel read/write primitive, or jailbreak. No new CoW device trigger was run, and device work remains blocked because no authorised Mac currently enumerates a device.
 
