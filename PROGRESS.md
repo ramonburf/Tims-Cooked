@@ -1,6 +1,6 @@
 # Progress tracker
 
-Last updated: 2026-11-20.
+Last updated: 2026-11-22.
 
 Percentages mean "how far along that component is toward being a working part of the chain",
 not "probability it will work". 100 % means done and verified on hardware.
@@ -9,7 +9,7 @@ not "probability it will work". 100 % means done and verified on hardware.
 
 | # | Stage | Component | Status | % |
 |---|-------|-----------|--------|---|
-| 1 | Target acquisition | Firmware / kernelcache / dyld shared cache for build 24A446 (target) plus a 27.2 reference build | Complete | **100%** |
+| 1 | Target acquisition | Exact kernelcache for current `iPhone14,2` target build 24A5390f plus 24A446 / 24B119 comparison builds | Complete | **100%** |
 | 2 | Reachability map | Sandbox-app reachability of AGX / IOHID / IOSurface / WebKit daemons / network socket families | Complete (AGX sweep, iokit enumeration, crash corpus, `--rawsock` both devices) | **96%** |
 | 3 | Vulnerability ID | Whole-kernelcache diff 27.0.1 → 27.2 (91 kexts, 542 changed kernel functions) mapped to CVEs | Complete | **90%** |
 | 4 | Kernel r/w primitive | Socket UAF lead (CVE-2026-112514 mapping unverified) | **Unvalidated.** Historical peer-delivery/UDP events are ambiguous: `entered` increments before `sendmsg`, then the target fd closes before reclaimer allocation, so ordinary fd reuse can explain them. No UAF or kernel R/W established. | **5%** |
@@ -26,6 +26,7 @@ not "probability it will work". 100 % means done and verified on hardware.
 
 **Overall: not re-scored.** The earlier ~31% included unsupported socket-race progress and is superseded by the fd-reuse correction. Target acquisition, reachability mapping, and the build pipeline are substantially complete, but no kernel read/write primitive is verified and downstream stages remain untouched.
 Per-path percentages are in `JAILBREAK-PATHS.md`.
+The current target-build IOSurface static note links the service hook to `IOSurfaceRootUserClient`; app-level open, initialization-gate policy, and method reachability remain unresolved. See `research-updates/2026-11-22-iosurface-client-construction.md`.
 
 ## Confirmed 27.0.1 → 27.2 fix sites
 
