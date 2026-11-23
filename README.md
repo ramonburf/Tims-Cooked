@@ -8,7 +8,11 @@ No kernel read/write primitive, kernel code execution, PAC/SPTM bypass, or worki
 
 Start with the relevant notes under [`analysis/`](analysis/) and distinguish confirmed observations from hypotheses before running a probe.
 
-## Latest research update — 2026-11-22
+## Latest research update — 2026-11-23
+
+An exact-build IOSurface parser follow-up traced the `IOSurfacePlaneInfo` property lookup through an inheritance-aware class check: the value must be `OSArray` or a subclass before `c27200` calls slot `+0x90`. A plain `OSNumber` cannot reach that call through this lookup. The returned count still feeds `24*n` and `32*n` allocation requests before the visible `n>3` rejection, and the unchecked text numeric token is not connected to the property, an accepted array element, or the count. Static analysis only; no device method was called, and no vulnerability, kernel read/write primitive, exploit, or jailbreak is established. See the [IOSurfacePlaneInfo class-gate note](research-updates/2026-11-23-iosurface-planeinfo-class-gate.md).
+
+### Previous update — 2026-11-22
 
 An exact-build static follow-up linked IOSurface's mode-dependent external-method wrapper to its generic dispatcher and per-client tables in target build `24A5390f`, compared with `24B119`. The dispatch mapping is conditional on client mode; ordinary-app open, runtime mode, callback/client-free ordering, and any memory-safety effect remain unverified. No device method was called; no vulnerability, kernel read/write primitive, exploit, or jailbreak is established. See the [notification dispatch follow-up](research-updates/2026-11-22-iosurface-notify-dispatch.md) and the earlier [client-construction note](research-updates/2026-11-22-iosurface-client-construction.md).
 
