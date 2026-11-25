@@ -1,6 +1,8 @@
 # Progress tracker
 
-Last updated: 2026-11-22.
+Last updated: 2026-11-25.
+
+A bounded 2026-11-25 device batch on iPhone18,1/build `24A446` completed a userland self-memory control, one ANE service open without a selector call, and decmpfs filesystem-ingress attempts with no data-bearing readback; decoder entry remains unproven. No component percentage changes: no kernel read/write primitive or jailbreak was established. See `research-updates/2026-11-25-device-probe-batch.md`.
 
 Percentages mean "how far along that component is toward being a working part of the chain",
 not "probability it will work". 100 % means done and verified on hardware.
